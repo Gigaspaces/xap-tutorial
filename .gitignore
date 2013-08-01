@@ -4,3 +4,21 @@
 *.jar
 *.war
 *.ear
+
+
+# OS generated files #
+######################
+.DS_Store
+
+# Logs and databases #
+######################
+*.log
+
+# Maven
+log/
+target/
+
+# Eclipse
+.classpath
+.project
+.settings/

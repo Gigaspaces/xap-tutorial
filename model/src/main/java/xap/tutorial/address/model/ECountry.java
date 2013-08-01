@@ -1,0 +1,6 @@
+package xap.tutorial.address.model;
+
+ 
+public enum ECountry {
+	USA, UNITED_KINGDOM, BRAZIL, MAROCCO, JAPAN, SWEDEN, INDIA, SPAIN, GREECE, FRANCE, SOUTH_AFRICA, PORTUGAL, AUSTRIA, GERMAN, POLIN;
+}
