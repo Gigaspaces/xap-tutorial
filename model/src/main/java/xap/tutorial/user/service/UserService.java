@@ -16,24 +16,20 @@ public class UserService {
 	@Qualifier(IUserService.SPACE)
 	private GigaSpace space;
 
-	
 	public void createOrUpdateUser(User user) {
 		space.write(user);
 	}
-	
-//	WriteModifiers.RETURN_PREV_ON_UPDATE.add(WriteModifiers.UPDATE_OR_WRITE)
-	
+
 	public void createUser(User user) {
 		space.write(user, WriteModifiers.WRITE_ONLY);
 	}
 
-	public void createUser(User user, long lease) {
-		space.write(user,lease);
+	public void createUserWithTimeToLive(User user) {
+		space.write(user, 100000);
 	}
-	
+
 	public void updateUser(User user) {
 		space.write(user, WriteModifiers.UPDATE_ONLY);
 	}
-	
- 
+
 }

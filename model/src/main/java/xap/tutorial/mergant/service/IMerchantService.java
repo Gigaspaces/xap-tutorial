@@ -1,8 +1,8 @@
 package xap.tutorial.mergant.service;
 
-public interface IMerchantQueryService {
+public interface IMerchantService {
 
 	public static String SERVICE = "MerchantQueryService";
-	
-	public static String SPACE = "eCommerceSpace";
+
+	public static String SPACE = "xapTutorialSpace";
 }

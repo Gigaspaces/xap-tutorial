@@ -2,13 +2,11 @@ package xap.tutorial.user.model;
 
 import xap.tutorial.account.model.EAccountStatus;
 import xap.tutorial.address.model.Address;
-import xap.tutorial.address.model.EAddressType;
 
 import com.gigaspaces.annotation.pojo.SpaceClass;
 import com.gigaspaces.annotation.pojo.SpaceId;
 import com.gigaspaces.annotation.pojo.SpaceIndex;
 import com.gigaspaces.annotation.pojo.SpaceRouting;
-import com.gigaspaces.document.DocumentProperties;
 import com.gigaspaces.metadata.index.SpaceIndexType;
 
 @SpaceClass
@@ -19,7 +17,7 @@ public class User {
 	private Double balance;
 	private Double creditLimit;
 	private EAccountStatus status;
-	private DocumentProperties addresses;
+	private Address address;
 
 	public User(Integer id) {
 		this.id = id;
@@ -72,22 +70,12 @@ public class User {
 		return status;
 	}
 
-	public void addAddress(EAddressType type, Address address) {
-		if (addresses == null) {
-			addresses = new DocumentProperties();
-		}
-		addresses.put(type.toString(), address);
+	public Address getAddress() {
+		return address;
 	}
 
-	public Address getAddress(EAddressType type) {
-		return (Address) addresses.get(type.toString());
+	public void setAddress(Address address) {
+		this.address = address;
 	}
 
-	public DocumentProperties getAddresses() {
-		return addresses;
-	}
-
-	public void setAddresses(DocumentProperties addresses) {
-		this.addresses = addresses;
-	}
 }

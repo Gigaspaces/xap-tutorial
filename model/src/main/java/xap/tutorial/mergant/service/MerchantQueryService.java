@@ -7,12 +7,11 @@ import org.springframework.stereotype.Service;
 
 import xap.tutorial.mergant.model.Merchant;
 
-
-@Service(IMerchantQueryService.SERVICE)
+@Service(IMerchantService.SERVICE)
 public class MerchantQueryService {
 
 	@Autowired
-	@Qualifier(IMerchantQueryService.SPACE)
+	@Qualifier(IMerchantService.SPACE)
 	private GigaSpace space;
 
 	// Return a collection of Merchants
