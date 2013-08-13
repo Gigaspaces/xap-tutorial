@@ -11,7 +11,6 @@ import xap.tutorial.mergant.service.IMerchantService;
 @Service
 public class SpaceUtility {
 
-	
 	@Autowired
 	@Qualifier(IMerchantService.SPACE)
 	private GigaSpace space;

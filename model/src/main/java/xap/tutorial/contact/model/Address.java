@@ -1,4 +1,4 @@
-package xap.tutorial.address.model;
+package xap.tutorial.contact.model;
 
 import java.io.Serializable;
 

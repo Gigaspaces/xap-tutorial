@@ -10,14 +10,13 @@
 	xsi:schemaLocation="
    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
-   http://www.openspaces.org/schema/core http://www.openspaces.org/schema/9.5/core/openspaces-core.xsd
-   http://www.openspaces.org/schema/events http://www.openspaces.org/schema/9.5/events/openspaces-events.xsd
-   http://www.openspaces.org/schema/remoting http://www.openspaces.org/schema/9.5/remoting/openspaces-remoting.xsd
-   http://www.openspaces.org/schema/sla http://www.openspaces.org/schema/9.5/sla/openspaces-sla.xsd">
+   http://www.openspaces.org/schema/core http://www.openspaces.org/schema/8.0/core/openspaces-core.xsd
+   http://www.openspaces.org/schema/events http://www.openspaces.org/schema/8.0/events/openspaces-events.xsd
+   http://www.openspaces.org/schema/remoting http://www.openspaces.org/schema/8.0/remoting/openspaces-remoting.xsd
+   http://www.openspaces.org/schema/sla http://www.openspaces.org/schema/8.0/sla/openspaces-sla.xsd">
 
 
-	<context:component-scan base-package="xap.qsg" />
-	<context:component-scan base-package="xap.tutorial" />
+	<context:component-scan base-package="com.ecommerce" />
 
 	<!-- Enables to configure Spring beans through annotations -->
 	<context:annotation-config />
@@ -37,16 +36,16 @@
 		that we do not specify here the cluster topology of the space. It is declared 
 		by the os-sla:sla element of this pu.xml file. -->
 	<!-- A bean representing a space (an IJSpace implementation) -->
-	<os-core:space id="space" url="/./xapTutorialSpace" />
-
+	<os-core:space id="space" url="jini://*/*/eCommerceSpace" />
+ 
 	<!-- Defines a distributed transaction manager. -->
 	<os-core:distributed-tx-manager id="transactionManager" />
 
 	<!-- Define the GigaSpace instance that the application will use to access 
 		the space -->
-	<os-core:giga-space id="xapTutorialSpace" space="space"
+	<os-core:giga-space id="eCommerceSpace" space="space"
 		tx-manager="transactionManager" />
-
-
+		
+	 
 
 </beans>

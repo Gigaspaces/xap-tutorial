@@ -1,15 +1,13 @@
 package xap.tutorial.mergant.model;
 
-import java.util.HashMap;
-
 import xap.tutorial.account.model.EAccountStatus;
-import xap.tutorial.address.model.Address;
-import xap.tutorial.address.model.EAddressType;
 
 import com.gigaspaces.annotation.pojo.SpaceClass;
+import com.gigaspaces.annotation.pojo.SpaceDynamicProperties;
 import com.gigaspaces.annotation.pojo.SpaceId;
 import com.gigaspaces.annotation.pojo.SpaceIndex;
 import com.gigaspaces.annotation.pojo.SpaceRouting;
+import com.gigaspaces.document.DocumentProperties;
 import com.gigaspaces.metadata.index.SpaceIndexType;
 
 @SpaceClass
@@ -19,10 +17,9 @@ public class Merchant {
 	private String name;
 	private Double receipts;
 	private Double feeAmount;
-	private EProductType category;
+	private ECategoryType category;
 	private EAccountStatus status;
-
-	private HashMap<EAddressType, Address> addresses;
+	private DocumentProperties extraInfo;
 
 	public Merchant() {
 	}
@@ -37,6 +34,15 @@ public class Merchant {
 		this.id = id;
 	}
 
+	@SpaceDynamicProperties
+	public DocumentProperties getExtraInfo() {
+		return extraInfo;
+	}
+
+	public void setExtraInfo(DocumentProperties extraInfo) {
+		this.extraInfo = extraInfo;
+	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -46,12 +52,12 @@ public class Merchant {
 	}
 
 	@SpaceIndex(type = SpaceIndexType.BASIC)
-	public EProductType getCategory() {
+	public ECategoryType getCategory() {
 
 		return category;
 	}
 
-	public void setCategory(EProductType category) {
+	public void setCategory(ECategoryType category) {
 		this.category = category;
 	}
 
@@ -77,24 +83,6 @@ public class Merchant {
 
 	public Double getFeeAmount() {
 		return feeAmount;
-	}
-
-	// This means that each Address.zip in the Collection is indexed.
-	// @SpaceIndex(path = "[*].zip")
-	public HashMap<EAddressType, Address> getAddresses() {
-		return addresses;
-	}
-
-	public void setAddresses(HashMap<EAddressType, Address> addresses) {
-		this.addresses = addresses;
-	}
-
-	public void addAddress(EAddressType type, Address address) {
-		if (addresses == null) {
-			addresses = new HashMap<EAddressType, Address>();
-		}
-
-		addresses.put(type, address);
 	}
 
 }
