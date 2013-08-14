@@ -13,6 +13,9 @@ import com.gigaspaces.client.ChangeSet;
 import com.gigaspaces.client.WriteModifiers;
 import com.gigaspaces.document.DocumentProperties;
 import com.gigaspaces.document.SpaceDocument;
+import com.gigaspaces.metadata.SpaceTypeDescriptor;
+import com.gigaspaces.metadata.SpaceTypeDescriptorBuilder;
+import com.gigaspaces.metadata.index.SpaceIndexType;
 import com.gigaspaces.query.IdQuery;
 import com.j_spaces.core.LeaseContext;
 import com.j_spaces.core.client.UpdateModifiers;
@@ -109,5 +112,15 @@ public class QSGService {
 		space.write(document);
 	}
 
+	public void registerProductType() {
+		// Create type Document descriptor:
+		SpaceTypeDescriptor typeDescriptor = new SpaceTypeDescriptorBuilder(
+				"Product").idProperty("CatalogNumber")
+				.routingProperty("Category")
+				.addPropertyIndex("Name", SpaceIndexType.BASIC)
+				.addPropertyIndex("Price", SpaceIndexType.EXTENDED).create();
+		// Register type:
+		space.getTypeManager().registerTypeDescriptor(typeDescriptor);
+	}
  
 }

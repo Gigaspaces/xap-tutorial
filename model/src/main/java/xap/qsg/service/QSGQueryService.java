@@ -10,9 +10,6 @@ import xap.tutorial.user.model.User;
 
 import com.gigaspaces.client.ReadByIdsResult;
 import com.gigaspaces.document.SpaceDocument;
-import com.gigaspaces.metadata.SpaceTypeDescriptor;
-import com.gigaspaces.metadata.SpaceTypeDescriptorBuilder;
-import com.gigaspaces.metadata.index.SpaceIndexType;
 import com.j_spaces.core.client.SQLQuery;
 
 @Service(IQSGService.QUERY_SERVICE)
@@ -152,15 +149,6 @@ public class QSGQueryService {
 		return space.readMultiple(query);
 	}
 
-	public void registerProductType() {
-		// Create type Document descriptor:
-		SpaceTypeDescriptor typeDescriptor = new SpaceTypeDescriptorBuilder(
-				"Product").idProperty("CatalogNumber")
-				.routingProperty("Category")
-				.addPropertyIndex("Name", SpaceIndexType.BASIC)
-				.addPropertyIndex("Price", SpaceIndexType.EXTENDED).create();
-		// Register type:
-		space.getTypeManager().registerTypeDescriptor(typeDescriptor);
-	}
+
 
 }

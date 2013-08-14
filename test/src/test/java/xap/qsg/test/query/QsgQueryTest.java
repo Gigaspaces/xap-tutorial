@@ -184,7 +184,7 @@ public class QsgQueryTest extends AbstractTutorialContextTests {
 	@Before
 	public void registerProductType() {
 
-		queryService.registerProductType();
+		service.registerProductType();
 		service.createDocumemt();
 
 		// Create a user
