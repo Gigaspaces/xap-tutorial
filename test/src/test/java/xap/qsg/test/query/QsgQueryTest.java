@@ -109,7 +109,6 @@ public class QsgQueryTest extends AbstractTutorialContextTests {
 	public void sqlFindUserByPhoneNumber() {
 		User user = queryService.sqlFindUserByPhoneNumber();
 		Assert.assertNotNull(user);
-
 	}
 
 	@Test
