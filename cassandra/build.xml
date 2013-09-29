@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+
+<project name="gigaspaces-cassandra-pu" default="usage" basedir=".">
+
+	<loadproperties srcFile="ant.properties" />
+
+
+	<property name="audit.dir" value="../model/src/main/java/xap/tutorial/audit" />
+	<property name="src.dir" value="${basedir}/src/main/java" />
+	<property name="dist.dir" value="${basedir}/dist" />
+	<property name="pu.dir" value="${basedir}/src/main/pu" />
+	<property name="jar.file" value="${basedir}/CassandraPU.jar" />
+
+	<presetdef name="javac">
+		<javac includeantruntime="false" />
+	</presetdef>
+
+	<path id="all-libs">
+		<fileset dir="${gshome.dir}/lib">
+			<include name="**/*.jar" />
+			<exclude name="openspaces/mule-os.jar" />
+		</fileset>
+	</path>
+
+	<target name="usage">
+		<echo message="" />
+		<echo message="GigaSpaces cassandra app example build script" />
+		<echo message="----------------------------------------------------" />
+		<echo message="" />
+		<echo message="Available targets are:" />
+		<echo message="" />
+		<echo message="clean                    --> Cleans all output dirs" />
+		<echo message="build                    --> Build all; don't create JARs" />
+		<echo message="dist                     --> Build the distribution" />
+		<echo message="deploy                   --> Build and deploy the web app on the service grid" />
+		<echo message="" />
+	</target>
+
+	<target name="clean">
+		<delete dir="${basedir}/out" />
+		<delete dir="${basedir}/dist" />
+		<delete file="${jar.file}" failonerror="false" />
+	</target>
+
+	<target name="build">
+		<!--build src="${src.dir}" classes="${web.content.dir}/WEB-INF/classes" additional-classpath="" /-->
+		<build src="${src.dir}" classes="${dist.dir}" additional-classpath="" />
+		<build src="${audit.dir}" classes="${dist.dir}" additional-classpath="" />
+	</target>
+
+	<target name="dist" depends="build">
+		<copy todir="${dist.dir}">
+			<fileset dir="${pu.dir}" />
+		</copy>
+	 
+		<jar basedir="${dist.dir}" jarfile="${jar.file}">
+			<exclude name="**/*.java" />
+			 
+		</jar>
+	</target>
+
+	<macrodef name="build">
+		<attribute name="src" />
+		<attribute name="classes" />
+		<attribute name="additional-classpath" />
+		<sequential>
+			<mkdir dir="@{classes}" />
+
+			<javac destdir="@{classes}" includeantruntime="false" source="1.6" target="1.6" debug="on" deprecation="false" optimize="false" failonerror="true">
+				<src path="@{src}" />
+				<classpath refid="all-libs" />
+				<classpath location="@{additional-classpath}" />
+			</javac>
+
+			<copy todir="@{classes}" preservelastmodified="true">
+				<fileset dir="@{src}">
+					<include name="**/*.properties" />
+					<include name="**/*.handlers" />
+					<include name="**/*.schemas" />
+					<include name="**/*.xml" />
+					<include name="**/*.dtd" />
+					<include name="**/*.xsd" />
+				</fileset>
+			</copy>
+		</sequential>
+	</macrodef>
+</project>
+
