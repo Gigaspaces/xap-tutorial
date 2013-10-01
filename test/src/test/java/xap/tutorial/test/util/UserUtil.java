@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import xap.qsg.service.IQSGService;
+import xap.qsg.query.service.IQueryService;
 import xap.tutorial.account.model.EAccountStatus;
 import xap.tutorial.contact.model.Address;
 import xap.tutorial.contact.model.EContactType;
@@ -20,7 +20,7 @@ import xap.tutorial.user.model.User;
 public class UserUtil {
 
 	@Autowired
-	@Qualifier(IQSGService.SPACE)
+	@Qualifier(IQueryService.SPACE)
 	private GigaSpace gigaSpace;
 
 	public void loadUsers() {
