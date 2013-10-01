@@ -1,4 +1,4 @@
-package xap.qsg.service;
+package xap.qsg.crud.service;
 
 import org.openspaces.core.GigaSpace;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,26 +17,29 @@ import com.gigaspaces.metadata.SpaceTypeDescriptor;
 import com.gigaspaces.metadata.SpaceTypeDescriptorBuilder;
 import com.gigaspaces.metadata.index.SpaceIndexType;
 import com.gigaspaces.query.IdQuery;
-import com.j_spaces.core.LeaseContext;
+import com.j_spaces.core.client.SQLQuery;
 import com.j_spaces.core.client.UpdateModifiers;
 
-@Service(IQSGService.SERVICE)
-public class QSGService {
+@Service(ICRUDService.SERVICE)
+public class CRUDService {
 
 	@Autowired
-	@Qualifier(IQSGService.SPACE)
+	@Qualifier(ICRUDService.SPACE)
 	private GigaSpace space;
 
-	public User writeUser() {
+	public void writeUser() {
 
 		User user = new User();
 		user.setId(new Long(1));
 		user.setName("John Smith");
+		user.setComment(new String[] {"This", "is","a","comment"});
+		user.setBalance(new Double(10.5));
+		user.setCreditLimit(new Double(1000.00));
+		user.setStatus(EAccountStatus.BLOCKED);
 		user.setStatus(EAccountStatus.ACTIVE);
 
 		// Write the user to the space
-		LeaseContext<User> context = space.write(user);
-		return context.getObject();
+		 space.write(user);
 	}
 
 	public void writeUsers() {
@@ -48,7 +51,7 @@ public class QSGService {
 		users[0].setStatus(EAccountStatus.ACTIVE);
 
 		users[1] = new User();
-		users[1].setId(new Long(1));
+		users[1].setId(new Long(2));
 		users[1].setName("John Dow");
 		users[1].setStatus(EAccountStatus.ACTIVE);
 
@@ -61,10 +64,10 @@ public class QSGService {
 		user.setName("John Smith");
 		user.setStatus(EAccountStatus.ACTIVE);
 
-		space.write(user, 0, 1000, WriteModifiers.WRITE_ONLY);
+		space.write(user, 0, 10000, WriteModifiers.WRITE_ONLY);
 	}
 
-	public void update() {
+	public void partialUpdate() {
 		User user = new User();
 		user.setId(new Long(1));
 		user.setName("John Dow");
@@ -92,7 +95,7 @@ public class QSGService {
 		}
 	}
 
-	public void createDocumemt() {
+	public SpaceDocument createDocumemt() {
 		DocumentProperties properties = new DocumentProperties()
 				.setProperty("CatalogNumber", "av-9876")
 				.setProperty("Category", "Aviation")
@@ -110,6 +113,8 @@ public class QSGService {
 		SpaceDocument document = new SpaceDocument("Product", properties);
 
 		space.write(document);
+
+		return document;
 	}
 
 	public void registerProductType() {
@@ -122,5 +127,35 @@ public class QSGService {
 		// Register type:
 		space.getTypeManager().registerTypeDescriptor(typeDescriptor);
 	}
- 
+
+	public User takeUserById() {
+		return space.takeById(User.class, 1L);
+	}
+
+	public User takeUserByTemplate() {
+		User template = new User();
+		template.setName("John Dow");
+		return space.take(template);
+	}
+
+	public User takeUserBySQL() {
+		SQLQuery<User> query = new SQLQuery<User>(User.class, "status = ?");
+		query.setParameter(1, EAccountStatus.BLOCKED);
+		return space.take(query);
+	}
+
+	public void clearUserByTemplate() {
+		User template = new User();
+		space.clear(template);
+	}
+
+	public void clearUserBySQL() {
+		SQLQuery<User> query = new SQLQuery<User>(User.class, "name = ?");
+		query.setParameter(1, "John Dow");
+		space.clear(query);
+	}
+
+	public void clearAllObjectInSpace() {
+		space.clear(null);
+	}
 }

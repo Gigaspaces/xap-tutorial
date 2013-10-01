@@ -1,4 +1,4 @@
-package xap.qsg.service;
+package xap.qsg.query.service;
 
 import org.openspaces.core.GigaSpace;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +12,11 @@ import com.gigaspaces.client.ReadByIdsResult;
 import com.gigaspaces.document.SpaceDocument;
 import com.j_spaces.core.client.SQLQuery;
 
-@Service(IQSGService.QUERY_SERVICE)
-public class QSGQueryService {
+@Service(IQueryService.SERVICE)
+public class QueryService {
 
 	@Autowired
-	@Qualifier(IQSGService.SPACE)
+	@Qualifier(IQueryService.SPACE)
 	private GigaSpace space;
 
 	public User findUserById() {
@@ -148,7 +148,5 @@ public class QSGQueryService {
 		query.setParameter(1, 15.0f);
 		return space.readMultiple(query);
 	}
-
-
 
 }
