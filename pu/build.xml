@@ -1,15 +1,16 @@
 <?xml version="1.0"?>
 
-<project name="gigaspaces-cassandra-pu" default="usage" basedir=".">
+<project name="gigaspaces-event-pu" default="usage" basedir=".">
 
 	<loadproperties srcFile="ant.properties" />
 
 
-	<property name="audit.dir" value="../model/src/main/java/xap/tutorial/audit" />
+	<property name="event.dir" value="../model/src/main/java/xap/qsg/pu/event" />
+	<property name="payment.dir" value="../model/src/main/java/xap/tutorial/payment/model" />
 	<property name="src.dir" value="${basedir}/src/main/java" />
 	<property name="dist.dir" value="${basedir}/dist" />
 	<property name="pu.dir" value="${basedir}/src/main/pu" />
-	<property name="jar.file" value="${basedir}/CassandraPU.jar" />
+	<property name="jar.file" value="${basedir}/EventPu.jar" />
 
 	<presetdef name="x.javac">
 		<javac includeantruntime="false" />
@@ -43,19 +44,19 @@
 	</target>
 
 	<target name="build">
-		<!--build src="${src.dir}" classes="${web.content.dir}/WEB-INF/classes" additional-classpath="" /-->
 		<build src="${src.dir}" classes="${dist.dir}" additional-classpath="" />
-		<build src="${audit.dir}" classes="${dist.dir}" additional-classpath="" />
+		<build src="${payment.dir}" classes="${dist.dir}" additional-classpath="" />
+		<build src="${event.dir}" classes="${dist.dir}" additional-classpath="" />
 	</target>
 
 	<target name="dist" depends="build">
 		<copy todir="${dist.dir}">
 			<fileset dir="${pu.dir}" />
 		</copy>
-	 
+
 		<jar basedir="${dist.dir}" jarfile="${jar.file}">
 			<exclude name="**/*.java" />
-			 
+
 		</jar>
 	</target>
 
