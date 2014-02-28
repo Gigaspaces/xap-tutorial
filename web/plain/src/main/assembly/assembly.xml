@@ -1,0 +1,32 @@
+<assembly>
+	<id>assemble-pu</id>
+	<formats>
+		<format>war</format>
+	</formats>
+	<includeBaseDirectory>false</includeBaseDirectory>
+	<fileSets>
+		<fileSet>
+			<directory>target/web-plain-${project.version}</directory>
+			<lineEnding>keep</lineEnding>
+			<outputDirectory>/</outputDirectory>
+			<includes>
+				<include>**/**</include>
+			</includes>
+			<excludes>
+				<exclude>**/*.jar</exclude>
+				<exclude>**/*.class</exclude>
+				<exclude>**/*.war</exclude>
+			</excludes>
+		</fileSet>
+		<fileSet>
+			<directory>target/web-plain-${project.version}/WEB-INF/classes
+			</directory>
+			<lineEnding>keep</lineEnding>
+			<outputDirectory>WEB-INF/classes</outputDirectory>
+			<includes>
+				<include>**/*.class</include>
+			</includes>
+		</fileSet>
+	</fileSets>
+</assembly>
+

@@ -1,0 +1,43 @@
+<assembly
+	xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
+	<id>assemble-pu</id>
+	<formats>
+		<format>war</format>
+	</formats>
+	<includeBaseDirectory>false</includeBaseDirectory>
+	<fileSets>
+		<fileSet>
+			<directory>target/web-space-${project.version}</directory>
+			<lineEnding>keep</lineEnding>
+			<outputDirectory>/</outputDirectory>
+			<!-- includes> <include>**/**</include> </includes -->
+			<excludes>
+				<exclude>**/*.jar</exclude>
+				<exclude>**/*.class</exclude>
+				<exclude>**/*.war</exclude>
+			</excludes>
+		</fileSet>
+		<fileSet>
+			<directory>target/web-space-${project.version}/WEB-INF/classes
+			</directory>
+			<lineEnding>keep</lineEnding>
+			<outputDirectory>WEB-INF/classes</outputDirectory>
+			<includes>
+				<include>**/*.class</include>
+			</includes>
+		</fileSet>
+	</fileSets>
+
+	<!-- dependencySets>
+		<dependencySet>
+			<useProjectArtifact>false</useProjectArtifact>
+			<useTransitiveDependencies>true</useTransitiveDependencies>
+			<useTransitiveFiltering>false</useTransitiveFiltering>
+			<outputDirectory>WEB-INF/lib</outputDirectory>
+ 
+		</dependencySet>
+	</dependencySets -->
+</assembly>
+

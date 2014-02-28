@@ -1,62 +1,58 @@
 package xap.tutorial.audit.model;
 
-import com.gigaspaces.annotation.pojo.SpaceClass;
-import com.gigaspaces.annotation.pojo.SpaceId;
-import com.gigaspaces.annotation.pojo.SpaceRouting;
+import com.gigaspaces.document.SpaceDocument;
 
-@SpaceClass
-public class AuditRecord {
+public class AuditRecord extends SpaceDocument {
 
-	private Long id;
+	private static final String TYPE_NAME = "AuditRecord";
+	private static final String ID = "id";
+	private static final String TIMESTAMP = "timeStamp";
+	private static final String USERNAME = "userName";
+	private static final String APPLICATION = "application";
+	private static final String CONTENT = "content";
 
-	private Long timeStamp;
+	public AuditRecord() {
+		super(TYPE_NAME);
+	}
 
-	private String application;
-
-	private String auditContent;
-
-	private String userName;
-
-	@SpaceId
-	@SpaceRouting
 	public Long getId() {
-		return id;
+		return super.getProperty(ID);
 	}
 
 	public void setId(Long id) {
-		this.id = id;
+		super.setProperty(ID, id);
 	}
 
 	public Long getTimeStamp() {
-		return timeStamp;
+		return super.getProperty(TIMESTAMP);
 	}
 
 	public void setTimeStamp(Long timeStamp) {
-		this.timeStamp = timeStamp;
+		super.setProperty(TIMESTAMP, timeStamp);
 	}
 
 	public String getApplication() {
-		return application;
+		return super.getProperty(APPLICATION);
 	}
 
 	public void setApplication(String application) {
-		this.application = application;
+		super.setProperty(APPLICATION, application);
 	}
 
 	public String getAuditContent() {
-		return auditContent;
+		return super.getProperty(CONTENT);
 	}
 
 	public void setAuditContent(String auditContent) {
-		this.auditContent = auditContent;
+		super.setProperty(CONTENT, auditContent);
 	}
 
 	public String getUserName() {
-		return userName;
+		return super.getProperty(USERNAME);
 	}
 
 	public void setUserName(String userName) {
-		this.userName = userName;
+		super.setProperty(USERNAME, userName);
 	}
 
 }

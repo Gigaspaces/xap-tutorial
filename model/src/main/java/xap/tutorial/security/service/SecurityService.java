@@ -2,6 +2,8 @@ package xap.tutorial.security.service;
 
 import java.util.Properties;
 
+import javax.annotation.PostConstruct;
+
 import org.openspaces.core.GigaSpace;
 import org.openspaces.core.GigaSpaceConfigurer;
 import org.openspaces.core.space.SecurityConfig;
@@ -17,32 +19,35 @@ import com.gigaspaces.security.directory.DirectoryManager;
 import com.gigaspaces.security.directory.Role;
 import com.gigaspaces.security.directory.RoleManager;
 import com.gigaspaces.security.directory.User;
+import com.gigaspaces.security.directory.UserDetails;
 import com.gigaspaces.security.directory.UserManager;
 
 @Service
 public class SecurityService {
 
-	DirectoryManager directoryManager = null;
+	private UserManager userManager = null;
+
+	private RoleManager roleManager = null;
 
 	public void createUser() {
-		Properties securityProperties = new Properties();
-		SecurityManager securityManager = SecurityFactory
-				.createSecurityManager(securityProperties);
 
-		directoryManager = securityManager.createDirectoryManager(new User(
-				"admin", "admin"));
-		// Create a new Role
-		this.createRole();
+ 
 		// Create the User
 		User user = new User("student", "student123", new RoleAuthority(
 				"training"));
-		// Register the new User
-		UserManager userManager = directoryManager.getUserManager();
+
+		try {
+			UserDetails s = userManager.getUser("student");
+			System.out.println(s);
+
+			userManager.deleteUser("student");
+		} catch (Exception ex) {
+
+		}
 		userManager.createUser(user);
 	}
 
-	private Role createRole() {
-		RoleManager roleManager = directoryManager.getRoleManager();
+	public Role createRole() {
 
 		Role role = new Role("training",
 				new SpaceAuthority(SpacePrivilege.READ), new SpaceAuthority(
@@ -71,5 +76,18 @@ public class SecurityService {
 		@SuppressWarnings("unused")
 		GigaSpace gigaSpace = new GigaSpaceConfigurer(urlSpaceConfigurer)
 				.gigaSpace();
+	}
+
+	@PostConstruct
+	public void init() {
+		Properties securityProperties = new Properties();
+		SecurityManager securityManager = SecurityFactory
+				.createSecurityManager(securityProperties);
+
+		DirectoryManager directoryManager = securityManager
+				.createDirectoryManager(new User("admin", "admin"));
+
+		roleManager = directoryManager.getRoleManager();
+		userManager = directoryManager.getUserManager();
 	}
 }

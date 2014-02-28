@@ -18,7 +18,7 @@ public class CassandraTest {
 		GigaSpace space = new GigaSpaceConfigurer(new UrlSpaceConfigurer(url))
 				.gigaSpace();
 
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 1000; i++) {
 			AuditRecord audit = new AuditRecord();
 			audit.setId(new Long(i));
 			audit.setApplication("Financial Application");
